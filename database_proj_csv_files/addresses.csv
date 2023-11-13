@@ -1,0 +1,3 @@
+id,customer_id,street_address,zip_code,state_id,country_id
+1,1,"123 Main St",12345,1,1
+2,2,"456 Side St",54321,2,1

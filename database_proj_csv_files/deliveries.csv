@@ -1,0 +1,3 @@
+id,incoming_or_outgoing,address_id,shipping_carrier,tracking_number,date_shipped,fulfilled,date_fulfilled
+1,1,1,1,12345,2023-11-12,true,2023-11-13
+2,0,2,1,54321,2023-11-13,false,

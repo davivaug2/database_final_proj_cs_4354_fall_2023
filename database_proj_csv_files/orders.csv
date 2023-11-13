@@ -1,0 +1,3 @@
+id,customer_id,total,subtotal,date_purchased,order_status
+1,1,2000,1800,2023-11-10,pending
+2,2,1500,1400,2023-11-11,shipped

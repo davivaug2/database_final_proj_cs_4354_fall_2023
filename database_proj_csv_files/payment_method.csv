@@ -1,0 +1,3 @@
+customer_id,id,card_number,cv,name_on_card,address
+1,1,1234567890123456,123,John Doe,"456 Customer St, City"
+2,2,9876543210987654,456,Jane Smith,"789 Client St, Town"
