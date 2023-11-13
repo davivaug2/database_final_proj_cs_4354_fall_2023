@@ -1,0 +1,187 @@
+-- Create the aircrafts table
+CREATE TABLE aircrafts (
+    id INT NOT NULL AUTO_INCREMENT,
+    model INT,
+    make INT,
+    year_of_manufacture INT,
+    PRIMARY KEY (id),
+    FOREIGN KEY (model) REFERENCES aircraft_model(id),
+    FOREIGN KEY (make) REFERENCES aircraft_make(id)
+);
+
+-- Create the aircraft_model table
+CREATE TABLE aircraft_model (
+    id INT NOT NULL AUTO_INCREMENT,
+    name NVARCHAR(255) NOT NULL,
+    PRIMARY KEY (id)
+);
+
+-- Create the aircraft_make table
+CREATE TABLE aircraft_make (
+    id INT NOT NULL AUTO_INCREMENT,
+    name NVARCHAR(255) NOT NULL,
+    PRIMARY KEY (id)
+);
+
+-- Create the aircrafts_components junction table
+CREATE TABLE aircrafts_components (
+    aircraft_id INT,
+    component_id INT,
+    PRIMARY KEY (aircraft_id, component_id),
+    FOREIGN KEY (aircraft_id) REFERENCES aircrafts(id),
+    FOREIGN KEY (component_id) REFERENCES component(id)
+);
+
+-- Create the component table
+CREATE TABLE component (
+    id INT NOT NULL AUTO_INCREMENT,
+    name NVARCHAR(255) NOT NULL,
+    category_id INT,
+    supplier_id INT,
+    stock INT,
+    description NVARCHAR(255),
+    price DOUBLE,
+    weight DECIMAL,
+    manufacturer_part_number INT,
+    PRIMARY KEY (id),
+    FOREIGN KEY (category_id) REFERENCES categories(id),
+    FOREIGN KEY (supplier_id) REFERENCES supplier(id)
+);
+
+-- Create the categories table
+CREATE TABLE categories (
+    id INT NOT NULL AUTO_INCREMENT,
+    name NVARCHAR(100) NOT NULL,
+    description NVARCHAR(255) NOT NULL,
+    PRIMARY KEY (id)
+);
+
+-- Create the supplier table
+CREATE TABLE supplier (
+    id INT NOT NULL AUTO_INCREMENT,
+    name NVARCHAR(255) NOT NULL,
+    address NVARCHAR(255) NOT NULL,
+    email NVARCHAR(100) NOT NULL,
+    phone NVARCHAR(20) NOT NULL,
+    PRIMARY KEY (id)
+);
+
+-- Create the warehouse table (if needed)
+CREATE TABLE warehouse (
+    id INT NOT NULL AUTO_INCREMENT,
+    warehouse_address NVARCHAR(255) NOT NULL,
+    part_id INT,
+    part_name NVARCHAR(255) NOT NULL,
+    our_stock INT NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (part_id) REFERENCES component(id)
+);
+
+-- Create the customer table
+CREATE TABLE customer (
+    id INT NOT NULL AUTO_INCREMENT,
+    first_name NVARCHAR(50) NOT NULL,
+    last_name NVARCHAR(50) NOT NULL,
+    password NVARCHAR(255) NOT NULL,
+    email NVARCHAR(100) NOT NULL,
+    phone NVARCHAR(20) NOT NULL,
+    PRIMARY KEY (id)
+);
+
+-- Create the payment_method table
+CREATE TABLE payment_method (
+    customer_id INT,
+    id INT NOT NULL AUTO_INCREMENT,
+    cardNumber INT NOT NULL,
+    cv INT NOT NULL,
+    nameOnCard NVARCHAR(255) NOT NULL,
+    address NVARCHAR(255) NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (customer_id) REFERENCES customer(id)
+);
+
+-- Create the addresses table
+CREATE TABLE addresses (
+    id INT NOT NULL AUTO_INCREMENT,
+    customer_id INT,
+    street_address NVARCHAR(255) NOT NULL,
+    zipCode INT,
+    state_id INT,
+    country_id INT,
+    PRIMARY KEY (id),
+    FOREIGN KEY (customer_id) REFERENCES customer(id),
+    FOREIGN KEY (state_id) REFERENCES states(id),
+    FOREIGN KEY (country_id) REFERENCES country(id)
+);
+
+-- Create the states table
+CREATE TABLE states (
+    id INT NOT NULL AUTO_INCREMENT,
+    state NVARCHAR(255) NOT NULL,
+    PRIMARY KEY (id)
+);
+
+-- Create the country table
+CREATE TABLE country (
+    id INT NOT NULL AUTO_INCREMENT,
+    name NVARCHAR(100),
+    PRIMARY KEY (id)
+);
+
+-- Create the orders table
+CREATE TABLE orders (
+    id INT NOT NULL AUTO_INCREMENT,
+    customer_id INT,
+    total DOUBLE,
+    subtotal DOUBLE,
+    datePurchased DATETIME,
+    status NVARCHAR(255) NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (customer_id) REFERENCES customer(id)
+);
+
+-- Create the orders_components junction table
+CREATE TABLE orders_components (
+    order_id INT,
+    component_id INT,
+    PRIMARY KEY (order_id, component_id),
+    FOREIGN KEY (order_id) REFERENCES orders(id),
+    FOREIGN KEY (component_id) REFERENCES component(id)
+);
+
+-- Create the deliveries table
+CREATE TABLE deliveries (
+    id INT NOT NULL AUTO_INCREMENT,
+    incoming_or_outgoing BOOLEAN,
+    address_id INT,
+    shippingCarrier INT,
+    trackingNumber INT,
+    dateShipped DATETIME,
+    fulfilled BOOLEAN,
+    dateFulfilled DATETIME,
+    PRIMARY KEY (id),
+    FOREIGN KEY (address_id) REFERENCES addresses(id),
+    FOREIGN KEY (shippingCarrier) REFERENCES carrier(id)
+);
+
+-- Create the deliveries_orders junction table
+CREATE TABLE deliveries_orders (
+    id INT NOT NULL AUTO_INCREMENT,
+    outgoingDeliveryId INT,
+    order_id INT,
+    PRIMARY KEY (id),
+    FOREIGN KEY (outgoingDeliveryId) REFERENCES deliveries(id),
+    FOREIGN KEY (order_id) REFERENCES orders(id)
+);
+
+-- Create the employee table
+CREATE TABLE employee (
+    id INT NOT NULL AUTO_INCREMENT,
+    name NVARCHAR(100) NOT NULL,
+    salary INT NOT NULL,
+    title NVARCHAR(100) NOT NULL,
+    location_home_address NVARCHAR(255) NOT NULL,
+    PRIMARY KEY (id)
+);
+
+-- Create additional tables as needed for reports and other features
