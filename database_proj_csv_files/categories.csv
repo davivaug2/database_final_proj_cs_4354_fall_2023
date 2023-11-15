@@ -1,3 +1,6 @@
 id,name,description
-1,Wheels,Tire categories
-2,Wings,Wing categories
+1,Tire Components,Tire and related components
+2,Wing Components,Wing and related components
+3,Engine Components,Aircraft engine and related components
+4,Avionics,Avionics systems and components
+5,Propellers,Aircraft propellers and related components
