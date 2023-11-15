@@ -1,2 +1,6 @@
-id,name,address,supply,email,phone
-1,XYZ Corp,"123 Aviation St, City",5000,supplier@example.com,123-456-7890
+id,name,address,email,phone
+1,ABC Aviation Supplies,123 Main St,abc@example.com,123-456-7890
+2,XYZ Aircraft Parts,456 Oak St,xyz@example.com,987-654-3210
+3,LMN Aviation Systems,789 Pine St,lmn@example.com,456-789-0123
+4,DEF Avionics Ltd,101 Maple St,def@example.com,789-012-3456
+5,PQR Propeller Solutions,202 Cedar St,pqr@example.com,012-345-6789
