@@ -1,2 +1,6 @@
-id,aircraft_company
+id,name
 1,Boeing
+2,Airbus
+3,Cessna
+4,Beechcraft
+5,Embraer
