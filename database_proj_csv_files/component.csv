@@ -1,3 +1,6 @@
-id,name,category,supplier_id,stock,description,price,weight,manufacturer_part_number
-1,Whatever tire,Wheels,1,100,"Tire for Boeing 747",250,15.5,123456
-2,Whatever wing,Wings,1,50,"Wing for Boeing 747",1500,750,987654
+id,name,category_id,supplier_id,stock,description,price,weight,manufacturer_part_number
+1,Tire,1,1,100,High-quality aircraft tire,150.00,25.5,123456
+2,Wing,2,2,50,Aircraft wing assembly,1000.00,350.0,789012
+3,Engine,3,3,30,Aircraft engine,5000.00,1500.0,345678
+4,Avionics,4,4,75,Advanced avionics system,2000.00,120.0,567890
+5,Propeller,5,5,40,Aircraft propeller,800.00,75.0,901234
