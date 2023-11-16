@@ -75,9 +75,9 @@ INSERT INTO orders (customer_id, total_cost, sub_total, date_purchased, status) 
 (2, 1500, 1400, '2023-11-11', 'shipped');
 
 -- Insert data into orders_components
-INSERT INTO order_components (order_id, component_id) VALUES
-(1, 1),
-(2, 2);
+INSERT INTO order_components (order_id, component_id,quantity) VALUES
+(1, 1,4),
+(2, 2,31);
 -- Insert data into deliveries
 INSERT INTO deliveries (id, incoming_or_outgoing, address_id, shipping_carrier, tracking_number, date_shipped, fulfilled, date_fulfilled) VALUES
 (1, 1, 1, 1, 12345, '2023-11-12', TRUE, '2023-11-13'),
