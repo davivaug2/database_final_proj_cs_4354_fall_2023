@@ -1,0 +1,255 @@
+
+CREATE TABLE states (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    state NVARCHAR(255) NOT NULL
+);
+
+CREATE TABLE countries (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name NVARCHAR(100) NOT NULL
+);
+
+CREATE TABLE categories (
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    name NVARCHAR(100) NOT NULL,
+    description NVARCHAR(255) NOT NULL
+);
+
+CREATE TABLE suppliers (
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    name NVARCHAR(255) NOT NULL,
+    address NVARCHAR(255) NOT NULL,
+    email NVARCHAR(255) NOT NULL UNIQUE,
+    phone NVARCHAR(20) NOT NULL
+);
+
+CREATE TABLE components (
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    name NVARCHAR(255) NOT NULL,
+    category_id INT,
+    supplier_id INT,
+    stock INT,
+    description NVARCHAR(255),
+    price DOUBLE,
+    weight DECIMAL,
+    manufacturer_part_number INT,
+    FOREIGN KEY (category_id) REFERENCES categories(id),
+    FOREIGN KEY (supplier_id) REFERENCES suppliers(id)
+);
+
+CREATE TABLE warehouses (
+    address NVARCHAR(255) NOT NULL,
+    part_id INT PRIMARY KEY AUTO_INCREMENT,
+    part_name NVARCHAR(255) NOT NULL,
+    our_stock INT NOT NULL
+);
+
+CREATE TABLE aircraft_model (
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    name NVARCHAR(255) NOT NULL
+);
+
+CREATE TABLE aircraft_make (
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    name NVARCHAR(255) NOT NULL
+);
+
+CREATE TABLE aircrafts (
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    model INT,
+    make INT,
+    year_of_manufacture INT,
+    FOREIGN KEY (model) REFERENCES aircraft_model(id),
+    FOREIGN KEY (make) REFERENCES aircraft_make(id)
+);
+
+CREATE TABLE aircrafts_components (
+    aircraft_id INT NOT NULL,
+    component_id INT NOT NULL,
+    PRIMARY KEY (aircraft_id, component_id),
+    FOREIGN KEY (aircraft_id) REFERENCES aircrafts(id),
+    FOREIGN KEY (component_id) REFERENCES components(id)
+);
+
+CREATE TABLE customers (
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    first_name NVARCHAR(50) NOT NULL,
+    last_name NVARCHAR(50) NOT NULL,
+    password NVARCHAR(255) NOT NULL,
+    email NVARCHAR(255) NOT NULL,
+    phone NVARCHAR(20) NOT NULL
+);
+
+CREATE TABLE addresses (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    customer_id INT,
+    street_address NVARCHAR(255) NOT NULL,
+    zip_code INT,
+    state_id INT,
+    country_id INT,
+    FOREIGN KEY (customer_id) REFERENCES customers(id),
+    FOREIGN KEY (state_id) REFERENCES states(id),
+    FOREIGN KEY (country_id) REFERENCES countries(id)
+);
+
+CREATE TABLE payment_method (
+    customer_id INT NOT NULL,
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    card_number NVARCHAR(255) NOT NULL,
+    cv INT NOT NULL,
+    name_on_card NVARCHAR(255) NOT NULL,
+    address NVARCHAR(255) NOT NULL,
+    FOREIGN KEY (customer_id) REFERENCES customers(id)
+);
+
+CREATE TABLE orders (
+    order_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    customer_id INT NOT NULL,
+    total_cost DOUBLE,
+    sub_total DOUBLE,
+    date_purchased DATETIME NOT NULL,
+    status NVARCHAR(255) NOT NULL,
+    FOREIGN KEY (customer_id) REFERENCES customers(id)
+);
+
+CREATE TABLE order_components (
+    order_id INT NOT NULL,
+    component_id INT NOT NULL,
+    quantity INT,
+    PRIMARY KEY (order_id, component_id),
+    FOREIGN KEY (order_id) REFERENCES orders(order_id),
+    FOREIGN KEY (component_id) REFERENCES components(id)
+);
+
+CREATE TABLE deliveries (
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    incoming_or_outgoing BOOLEAN,
+    address_id INT,
+    shipping_carrier INT,
+    tracking_number INT,
+    date_shipped DATETIME,
+    fulfilled BOOLEAN,
+    date_fulfilled DATETIME
+);
+
+CREATE TABLE deliveries_orders (
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    order_id INT,
+    delivery_id INT,
+    FOREIGN KEY (order_id) REFERENCES orders(order_id),
+    FOREIGN KEY (delivery_id) REFERENCES deliveries(id)
+);
+
+CREATE TABLE employees (
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    name NVARCHAR(100) NOT NULL,
+    salary INT NOT NULL,
+    title NVARCHAR(100) NOT NULL,
+    address NVARCHAR(255) NOT NULL
+);
+
+
+
+
+
+-- Insert data into countries
+INSERT INTO countries (id, name) VALUES
+(1, 'United States of America'),
+(2, 'Mexico');
+-- Insert data into states
+INSERT INTO states (id, state) VALUES
+(1, 'Texas'),
+(2, 'Alabama');
+-- Insert data into categories
+INSERT INTO categories (id, name, description) VALUES
+(1, 'Tire Components', 'Tire and related components'),
+(2, 'Wing Components', 'Wing and related components'),
+(3, 'Engine Components', 'Aircraft engine and related components'),
+(4, 'Avionics', 'Avionics systems and components'),
+(5, 'Propellers', 'Aircraft propellers and related components');
+-- Insert data into suppliers
+INSERT INTO suppliers (id, name, address, email, phone) VALUES
+(1, 'ABC Aviation Supplies', '123 Main St', 'abc@example.com', '123-456-7890'),
+(2, 'XYZ Aircraft Parts', '456 Oak St', 'xyz@example.com', '987-654-3210'),
+(3, 'LMN Aviation Systems', '789 Pine St', 'lmn@example.com', '456-789-0123'),
+(4, 'DEF Avionics Ltd', '101 Maple St', 'def@example.com', '789-012-3456'),
+(5, 'PQR Propeller Solutions', '202 Cedar St', 'pqr@example.com', '012-345-6789');
+-- Insert data into components
+INSERT INTO components (id, name, category_id, supplier_id, stock, description, price, weight, manufacturer_part_number) VALUES
+(1, 'Tire', 1, 1, 100, 'High-quality aircraft tire', 150.00, 25.5, 123456),
+(2, 'Wing', 2, 2, 50, 'Aircraft wing assembly', 1000.00, 350.0, 789012),
+(3, 'Engine', 3, 3, 30, 'Aircraft engine', 5000.00, 1500.0, 345678),
+(4, 'Avionics', 4, 4, 75, 'Advanced avionics system', 2000.00, 120.0, 567890),
+(5, 'Propeller', 5, 5, 40, 'Aircraft propeller', 800.00, 75.0, 901234);
+-- Insert data into warehouses
+INSERT INTO warehouses (address, part_id, part_name, our_stock) VALUES
+('123 Main St', 1, 'Aircraft Tire Warehouse', 500),
+('456 Oak St', 2, 'Wing Components Storage', 300),
+('789 Pine St', 3, 'Aircraft Engine Warehouse', 150),
+('101 Maple St', 4, 'Avionics Warehouse', 200),
+('202 Cedar St', 5, 'Aircraft Propeller Storage', 100);
+-- Insert data into aircraft_model
+INSERT INTO aircraft_model (id, name) VALUES
+(1, 'Boeing 747'),
+(2, 'Airbus A320');
+-- Insert data into aircraft_make
+INSERT INTO aircraft_make (id, name) VALUES
+(1, 'Boeing'),
+(2, 'Airbus');
+
+-- Insert data into aircrafts
+INSERT INTO aircrafts (model, make, year_of_manufacture) VALUES
+(1, 1, 2000),
+(2, 2, 2010),
+(1, 1, 2015),
+(2, 2, 2018),
+(1, 1, 2022);
+-- Insert data into aircrafts_components
+INSERT INTO aircrafts_components (aircraft_id, component_id) VALUES
+(1, 1),
+(1, 2),
+(2, 2);
+-- Insert data into customers
+INSERT INTO customers (id, first_name, last_name, password, email, phone) VALUES
+(1, 'John', 'Doe', 'pass123', 'customer@example.com', '987-654-3210'),
+(2, 'Jane', 'Smith', 'pass456', 'anothercustomer@example.com', '123-456-7890');
+-- Insert data into addresses
+INSERT INTO addresses (id, customer_id, street_address, zip_code, state_id, country_id) VALUES
+(1, 1, '123 Main St', 12345, 1, 1),
+(2, 2, '456 Side St', 54321, 2, 1);
+-- Insert data into payment_method
+INSERT INTO payment_method (customer_id, id, card_number, cv, name_on_card, address) VALUES
+(1, 1, '1234567890123456', 123, 'John Doe', '456 Customer St, City'),
+(2, 2, '9876543210987654', 456, 'Jane Smith', '789 Client St, Town');
+
+-- Insert data into orders
+INSERT INTO orders (customer_id, total_cost, sub_total, date_purchased, status) VALUES
+(1, 2000, 1800, '2023-11-10', 'pending'),
+(2, 1500, 1400, '2023-11-11', 'shipped');
+
+-- Insert data into orders_components
+INSERT INTO order_components (order_id, component_id) VALUES
+(1, 1),
+(2, 2);
+-- Insert data into deliveries
+INSERT INTO deliveries (id, incoming_or_outgoing, address_id, shipping_carrier, tracking_number, date_shipped, fulfilled, date_fulfilled) VALUES
+(1, 1, 1, 1, 12345, '2023-11-12', TRUE, '2023-11-13'),
+(2, 0, 2, 1, 54321, '2023-11-13', FALSE, NULL);
+
+-- Insert data into deliveries_orders
+INSERT INTO deliveries_orders (id, order_id, delivery_id) VALUES
+(1, 1, 1),
+(2, 2, 2);
+
+-- Insert data into employees
+INSERT INTO employees (id, name, salary, title, address) VALUES
+(1, 'John Doe', 60000, 'Manager', '123 Main St, City'),
+(2, 'Jane Smith', 50000, 'Supervisor', '456 Side St, Town'),
+(3, 'Bob Johnson', 45000, 'Analyst', '789 Center St, Village'),
+(4, 'Alice Brown', 55000, 'Coordinator', '101 Oak St, Suburb'),
+(5, 'Charlie Wilson', 70000, 'Director', '202 Pine St, Metropolis');
+
+
+;
+
+
