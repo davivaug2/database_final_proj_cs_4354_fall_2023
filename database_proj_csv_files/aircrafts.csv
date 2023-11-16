@@ -1,3 +1,9 @@
-id,aircraft_model_id,aircraft_make_id,year_of_manufacture
-1,1,1,2005
-2,2,1,2010
+# aircrafts.csv
+model, make, year_of_manufacture
+1, 1, 2000
+2, 2, 2010
+1, 1, 2015
+2, 2, 2018
+1, 1, 2022
+
+
