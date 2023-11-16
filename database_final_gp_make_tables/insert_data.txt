@@ -1,4 +1,4 @@
-
+USE AircraftDatabase;
 CREATE TABLE states (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     state NVARCHAR(255) NOT NULL
