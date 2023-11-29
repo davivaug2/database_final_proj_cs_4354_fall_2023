@@ -1,4 +1,7 @@
-CREATE DATABASE AircraftDatabase;
+CREATE DATABASE AircraftDatabase
+CHARACTER SET utf8mb4
+    COLLATE utf8mb4_unicode_ci
+    ENGINE = InnoDB;
 USE AircraftDatabase;
 use aircraftdatabase;
 CREATE TABLE states (
