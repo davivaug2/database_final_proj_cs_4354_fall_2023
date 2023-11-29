@@ -42,13 +42,6 @@ CREATE TABLE components (
     FOREIGN KEY (supplier_id) REFERENCES suppliers(id)
 );
 
-CREATE TABLE warehouses (
-    address NVARCHAR(255) NOT NULL,
-    part_id INT PRIMARY KEY AUTO_INCREMENT,
-    part_name NVARCHAR(255) NOT NULL,
-    our_stock INT NOT NULL
-);
-
 CREATE TABLE aircraft_model (
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     name NVARCHAR(255) NOT NULL
