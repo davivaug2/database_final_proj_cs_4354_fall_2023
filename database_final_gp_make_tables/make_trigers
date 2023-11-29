@@ -1,0 +1,9 @@
+CREATE TRIGGER after_insert_orders_components
+AFTER INSERT
+ON orders_components
+FOR EACH ROW
+BEGIN
+    UPDATE components
+    SET stock = stock - NEW.quantity
+    WHERE component_id = NEW.component_id;
+END;
