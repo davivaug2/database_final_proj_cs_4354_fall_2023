@@ -1,0 +1,35 @@
+SELECT * FROM addresses;
+
+SELECT * FROM aircraft_make;
+
+SELECT * FROM aircraft_model;
+
+SELECT * FROM aircrafts;
+
+SELECT * FROM aircrafts_components;
+
+SELECT * FROM categories;
+
+SELECT * FROM components;
+
+SELECT * FROM countries;
+
+SELECT * FROM customers;
+
+SELECT * FROM deliveries;
+
+SELECT * FROM deliveries_orders;
+
+SELECT * FROM employees;
+
+SELECT * FROM order_components;
+
+SELECT * FROM orders;
+
+SELECT * FROM payment_method;
+
+SELECT * FROM states;
+
+SELECT * FROM suppliers;
+
+SHOW INDEX FROM components;
